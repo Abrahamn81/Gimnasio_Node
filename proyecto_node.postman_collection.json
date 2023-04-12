@@ -1,0 +1,438 @@
+{
+	"info": {
+		"_postman_id": "35ce388a-502f-433e-bcb0-2af2be2e734d",
+		"name": "proyecto_node",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Exercises",
+			"item": [
+				{
+					"name": "New Exercise",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NSwiaXNBZG1pbiI6MSwiaWF0IjoxNjc3NTE1ODY3LCJleHAiOjE2ODAxMDc4Njd9.d7U7QIt6RCTfZV-sftMiY60oSkyM2Ebz4QtbpnrEtoc",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "Curl de biceps",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "Ejercicio en el que trabajamos la flexion del brazo con la ayuda\nde mancuernas. trabajamos principalmente el biceps.",
+									"type": "text"
+								},
+								{
+									"key": "category",
+									"value": "Brazos",
+									"type": "text"
+								},
+								{
+									"key": "img",
+									"type": "file",
+									"src": "/home/hack/Documents/Ejercicios/proyecto_node/curlDeBiceps.jpg"
+								},
+								{
+									"key": "",
+									"value": "",
+									"type": "default",
+									"disabled": true
+								}
+							],
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/exercise",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"exercise"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Exercise",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OSwiaXNBZG1pbiI6MSwiaWF0IjoxNjc3MTcyNzc1LCJleHAiOjE2Nzk3NjQ3NzV9.c0k2sbj8RkZcMShkaEAY1VTIeEftP3mgHbSXBEX2QBA",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Dominadas\",\n    \"description\": \"lalalalala\",\n    \"category\": \"lolololo\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/exercise/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"exercise",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Exercises",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/exercise?category=espalda",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"exercise"
+							],
+							"query": [
+								{
+									"key": "category",
+									"value": "espalda"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Edit Exercise",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NSwiaXNBZG1pbiI6MSwiaWF0IjoxNjc5MzA4OTg0LCJleHAiOjE2ODE5MDA5ODR9.DoqBr4aTdb97VyNWIcJTUb14Wp-HEBQA3Dah9zLPZjE",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "patatas",
+									"type": "default"
+								},
+								{
+									"key": "category",
+									"value": "lechon",
+									"type": "default"
+								},
+								{
+									"key": "description",
+									"value": "jkkjafhalkhfasfddklahkl",
+									"type": "default"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:3000/exercise/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"exercise",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Single Exercise",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "",
+									"value": "",
+									"type": "default"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:3000/exercise/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"exercise",
+								"2"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "Register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\" : \"leire@gmail.com\",\n    \"password\" : \"123456789\",\n    \"name\": \"Leire\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/user",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"abraham@gmail.com\",\n    \"password\": \"123456789\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Edit User",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NSwiaXNBZG1pbiI6MSwiaWF0IjoxNjc3NTE1ODY3LCJleHAiOjE2ODAxMDc4Njd9.d7U7QIt6RCTfZV-sftMiY60oSkyM2Ebz4QtbpnrEtoc",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"charito@gmail.com\",\n    \"name\": \"Txarita\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/user/4",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"user",
+								"4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete User",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTUsImlzQWRtaW4iOm51bGwsImlhdCI6MTY3NzUxNDE5MCwiZXhwIjoxNjgwMTA2MTkwfQ.KHebEsGkzVpwzC5NiPvG09W1XSIFj0s13xg-POFkUE0",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"Pepe@gmail.com\",\n    \"password\": \"741852963\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/user/15",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"user",
+								"15"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get User",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NSwiaXNBZG1pbiI6MSwiaWF0IjoxNjc3NTE1ODY3LCJleHAiOjE2ODAxMDc4Njd9.d7U7QIt6RCTfZV-sftMiY60oSkyM2Ebz4QtbpnrEtoc",
+								"type": "default"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3000/user/4",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"user",
+								"4"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Likes",
+			"item": [
+				{
+					"name": "New Like",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NSwiaXNBZG1pbiI6MSwiaWF0IjoxNjc5MjM3NzY1LCJleHAiOjE2ODE4Mjk3NjV9.ki2fHCYNW6KWxoBnB6FNxtOKgOV8UYvoM_xzk7P7sS8",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "http://localhost:3000/exercises/4/likes",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"exercises",
+								"4",
+								"likes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Like",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NSwiaXNBZG1pbiI6MSwiaWF0IjoxNjc3NTE1ODY3LCJleHAiOjE2ODAxMDc4Njd9.d7U7QIt6RCTfZV-sftMiY60oSkyM2Ebz4QtbpnrEtoc",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "http://localhost:3000/exercises/5/likes",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"exercises",
+								"5",
+								"likes"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
