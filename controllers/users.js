@@ -1,7 +1,13 @@
 // Importo la función de gestion de errores que hay en helpers.js
 const { generateError } = require('../helpers');
 // Importo la función que crea un usuario que hay en la carpeta db en el users.js
-const { createUser, getUserById, getUserByEmail } = require('../db/users');
+const {
+  createUser,
+  getUsers,
+  getUserById,
+  getUserByEmail,
+  deleteUser,
+} = require('../db/users');
 // Importo la función que permite actualizar un usuario
 const { updateUser } = require('../db/users');
 // Importo bcrypt
@@ -42,16 +48,14 @@ const newUserController = async (req, res, next) => {
   }
 };
 
-//Función para obtener los datos de un usuario
-const getUserController = async (req, res, next) => {
+//Función para obtener los datos de los usuarios
+const getUsersController = async (req, res, next) => {
   try {
-    const { id } = req.params;
-
-    const user = await getUserById(id);
+    const users = await getUsers();
 
     res.send({
       status: 'ok',
-      data: user,
+      data: users,
     });
   } catch (error) {
     next(error);
@@ -92,7 +96,7 @@ const loginController = async (req, res, next) => {
   }
 };
 
-// Función que devuelve información de la persona logueada
+// Función que devuelve información del usuario logueado
 const getMeController = async (req, res, next) => {
   try {
     const user = await getUserById(req.userId, false);
@@ -106,8 +110,22 @@ const getMeController = async (req, res, next) => {
   }
 };
 
+// Función que devuelve información de un usuario
+const getUserByIdController = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const user = await getUserById(id, false);
+
+    res.send({
+      status: 'ok',
+      data: user,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
 // Función para actualizar un usuario
-const editUser = async (req, res, next) => {
+const editUserController = async (req, res, next) => {
   console.log('updateUser');
   try {
     let { name, email } = req.body;
@@ -130,13 +148,16 @@ const editUser = async (req, res, next) => {
   }
 };
 
-/* // Función para eliminar un usuario
+// Función para eliminar un usuario
 
-const deleteUser = async (req, res, next) => {
+const deleteUserController = async (req, res, next) => {
   try {
-    const user = await getUserById(req.userId);
+    const { id } = req.params;
+
+    await getUserById(id);
+
     // Eliminamos al usuario.
-    await deleteUser(req.userId);
+    await deleteUser(id);
 
     res.send({
       status: 'ok',
@@ -146,13 +167,14 @@ const deleteUser = async (req, res, next) => {
     next(err);
   }
 };
- */
+
 // Exportamos las funciones
 module.exports = {
   newUserController,
-  getUserController,
+  getUsersController,
+  getUserByIdController,
   loginController,
   getMeController,
-  editUser,
-  //deleteUser,
+  editUserController,
+  deleteUserController,
 };

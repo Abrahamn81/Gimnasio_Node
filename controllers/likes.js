@@ -23,7 +23,7 @@ const newLikeController = async (req, res, next) => {
 };
 
 //Borrar Like
-const deleteLike = async (req, res, next) => {
+const deleteLikeController = async (req, res, next) => {
   try {
     const { idExercise } = req.params;
 
@@ -42,4 +42,4 @@ const deleteLike = async (req, res, next) => {
   }
 };
 
-module.exports = { newLikeController, deleteLike };
+module.exports = { newLikeController, deleteLikeController };

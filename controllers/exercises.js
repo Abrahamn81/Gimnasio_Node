@@ -50,7 +50,7 @@ const getExercisesController = async (req, res, next) => {
   try {
     const { category } = req.query;
 
-    const exercises = await getAllExercises(category);
+    const exercises = await getAllExercises(category, req.userId);
     res.send({
       status: 'ok',
       data: exercises,
@@ -64,7 +64,7 @@ const getExercisesController = async (req, res, next) => {
 const getSingleExerciseController = async (req, res, next) => {
   try {
     const { id } = req.params;
-    const exercise = await getExerciseById(id);
+    const exercise = await getExerciseById(id, req.userId);
     res.send({
       status: 'ok',
       data: exercise,
@@ -77,13 +77,17 @@ const getSingleExerciseController = async (req, res, next) => {
 // Modificar un ejercicio
 const editExerciseController = async (req, res, next) => {
   try {
-    let { name, description, category, img } = req.body;
+    let { name, description, category } = req.body;
     const { id } = req.params;
+    console.log('id', id);
     // Si falta el nombre, la categoria o la descripción lanzamos un error.
     if (!name && !category && !description) {
       generateError('Faltan campos', 400);
     }
-
+    let img;
+    if (req.files?.img) {
+      img = await saveImg(req.files.img, 500);
+    }
     // Actualizamos el ejercicio.
     await updateExercise(name, category, description, img, id);
 

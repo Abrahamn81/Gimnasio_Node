@@ -8,11 +8,12 @@ const cors = require('cors');
 // Importamos las funciones de usuario mediante destructuring
 const {
   newUserController,
-  getUserController,
+  getUsersController,
   loginController,
-  editUser,
+  editUserController,
   getMeController,
-  //deleteUser,
+  deleteUserController,
+  getUserByIdController,
 } = require('./controllers/users');
 
 // Importamos las funciones de ejercicios mediante destructuring
@@ -25,12 +26,16 @@ const {
 } = require('./controllers/exercises');
 
 // Importamos las funciones de likes mediante destructuring
-const { newLikeController, deleteLike } = require('./controllers/likes');
+const {
+  newLikeController,
+  deleteLikeController,
+} = require('./controllers/likes');
 
 // Importamos las funciones de autentificación de usuario y de admin
 const { authUser } = require('./middlewares/auth');
 const { isAdmin } = require('./middlewares/isAdmin');
 const { canEditUser } = require('./middlewares/canEditUser');
+const { getUserById } = require('./db/users');
 
 //
 const app = express();
@@ -48,21 +53,22 @@ app.use('/uploads', express.static('./uploads'));
 //Rutas de usuario
 app.post('/user', newUserController);
 app.get('/user', authUser, getMeController);
-app.get('/user/:id', authUser, getUserController);
+app.get('/users/:id', authUser, getUserByIdController);
+app.get('/users', authUser, isAdmin, getUsersController);
 app.post('/login', loginController);
-app.put('/user/:id', authUser, canEditUser, editUser);
-//app.delete('/user/:id', authUser, deleteUser);
+app.put('/users/:id', authUser, canEditUser, editUserController);
+app.delete('/users/:id', authUser, isAdmin, deleteUserController);
 
 //Rutas de ejercicios
 app.post('/exercises', authUser, isAdmin, newExerciseController);
-app.get('/exercises', getExercisesController);
-app.get('/exercises/:id', getSingleExerciseController);
+app.get('/exercises', authUser, getExercisesController);
+app.get('/exercises/:id', authUser, getSingleExerciseController);
 app.put('/exercises/:id', authUser, isAdmin, editExerciseController);
 app.delete('/exercises/:id', authUser, isAdmin, deleteExerciseController);
 
 //Rutas de likes
 app.post('/exercises/:idExercise/likes', authUser, newLikeController);
-app.delete('/exercises/:idExercise/likes', authUser, deleteLike);
+app.delete('/exercises/:idExercise/likes', authUser, deleteLikeController);
 
 //Middleware de 404 (no se ha encontrado la ruta)
 app.use((req, res) => {

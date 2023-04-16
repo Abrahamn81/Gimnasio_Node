@@ -26,22 +26,22 @@ const createExercise = async (
   }
 };
 //Función que devuelve información de un ejercicio
-const getExerciseById = async (id) => {
+const getExerciseById = async (id, userId) => {
   let connection;
   try {
     connection = await getConnection();
 
     const [result] = await connection.query(
       `
-    SELECT E.*, IFNULL(L.countLikes,0) AS likes 
+    SELECT E.*
+    ,(SELECT COUNT(*) FROM likes
+            WHERE idExercise = E.id ) AS likes
+    ,(SELECT COUNT(*) FROM likes
+            WHERE idExercise = E.id and idUser = ?) AS userLikes
     FROM exercises E 
-    LEFT JOIN 
-  	  (SELECT COUNT(*) as countLikes,idExercise
-	    FROM likes  GROUP BY idExercise )
-    L ON L.idExercise = E.id 
     WHERE id = ?
     `,
-      [id]
+      [userId, id]
     );
     if (result.length === 0) {
       generateError(`El ejercicio con id: ${id} no existe`, 404);
@@ -53,26 +53,24 @@ const getExerciseById = async (id) => {
 };
 
 //Función que lista todos los ejercicios
-const getAllExercises = async (category = '') => {
+const getAllExercises = async (category = '', idUser) => {
   let connection;
   try {
     connection = await getConnection();
 
     const [result] = await connection.query(
       `
-    SELECT E.*, IFNULL(L.countLikes,0) AS likes 
+    SELECT E.*
+    ,(SELECT COUNT(*) FROM likes
+            WHERE idExercise = E.id ) AS likes
+    ,(SELECT COUNT(*) FROM likes
+            WHERE idExercise = E.id and idUser = ?) AS userLikes
     FROM exercises E 
-    LEFT JOIN 
-  	  (SELECT COUNT(*) as countLikes,idExercise
-	    FROM likes  GROUP BY idExercise )
-    L ON L.idExercise = E.id 
     WHERE category LIKE ? ORDER BY createdAt
     `,
-      [`${category}%`]
+      [idUser, `${category}%`]
     );
-    /*if (category.length > 0 && result.length === 0) {
-      generateError('La categoria no existe', 404);
-    }*/
+
     return result;
   } finally {
     if (connection) connection.release();
@@ -99,10 +97,19 @@ const updateExercise = async (name, category, description, img, exerciseId) => {
         generateError('Nombre de ejercicio no disponible', 403);
       }
 
-      await connection.query(
-        `UPDATE exercises SET name = ? , category = ?, description = ? WHERE id = ?`,
-        [name, category, description, exerciseId]
-      );
+      //Comprobamos si es necesario actualizar la imagen
+      if (img) {
+        await connection.query(
+          `UPDATE exercises SET name = ? , category = ?, description = ?, img = ? WHERE id = ?`,
+          [name, category, description, img, exerciseId]
+        );
+      } else {
+        //No se actualiza el campo imagen
+        await connection.query(
+          `UPDATE exercises SET name = ? , category = ?, description = ? WHERE id = ?`,
+          [name, category, description, exerciseId]
+        );
+      }
     }
   } finally {
     if (connection) connection.release();

@@ -52,6 +52,25 @@ const getUserById = async (id) => {
     if (connection) connection.release();
   }
 };
+// Devuelve la información pública de los usuarios
+const getUsers = async () => {
+  let connection;
+
+  try {
+    connection = await getConnection();
+
+    const [result] = await connection.query(
+      `
+    SELECT id, email, name, admin, createdAt, modifiedAt FROM users 
+    `
+    );
+
+    //devolvemos la posición 0 del array que me da como resultado la consulta anterior
+    return result;
+  } finally {
+    if (connection) connection.release();
+  }
+};
 
 //Crea un usuario en la base de datos y devuelve su id
 const createUser = async (name, email, password, admin) => {
@@ -142,7 +161,7 @@ const updateUser = async (name, email, userId) => {
   }
 };
 
-/* // Función para eliminar un usuario
+// Función para eliminar un usuario
 const deleteUser = async (userId) => {
   let connection;
 
@@ -150,22 +169,23 @@ const deleteUser = async (userId) => {
     connection = await getConnection();
 
     // Eliminamos los posibles likes del usuario.
-    await connection.query(`DELETE FROM likes WHERE idUser = ?`, [userId]);
+    //await connection.query(`DELETE FROM likes WHERE idUser = ?`, [userId]);
 
     // Eliminamos los posibles ejercicios del usuario.
-    await connection.query(`DELETE FROM exercises WHERE idUser = ?`, [userId]);
+    //await connection.query(`DELETE FROM exercises WHERE idUser = ?`, [userId]);
 
     // Ahora que nos hemos asegurado que no hay likes ni ejercicios eliminamos al usuario.
     await connection.query(`DELETE FROM users WHERE id = ?`, [userId]);
   } finally {
     if (connection) connection.release();
   }
-}; */
+};
 // Exportamos las funciones
 module.exports = {
   createUser,
+  getUsers,
   getUserById,
   getUserByEmail,
   updateUser,
-  //deleteUser,
+  deleteUser,
 };
