@@ -1,5 +1,5 @@
-const { generateError } = require('../helpers');
-const { getConnection } = require('./db');
+const { generateError } = require("../helpers");
+const { getConnection } = require("./db");
 
 // Función que crea un ejercicio
 const createExercise = async (
@@ -7,7 +7,7 @@ const createExercise = async (
   name,
   description,
   category,
-  img = ''
+  img = ""
 ) => {
   let connection;
   try {
@@ -20,6 +20,7 @@ const createExercise = async (
     `,
       [userId, name, description, category, img]
     );
+
     return result.insertId;
   } finally {
     if (connection) connection.release();
@@ -53,7 +54,7 @@ const getExerciseById = async (id, userId) => {
 };
 
 //Función que lista todos los ejercicios
-const getAllExercises = async (category = '', idUser) => {
+const getAllExercises = async (category = "", idUser) => {
   let connection;
   try {
     connection = await getConnection();
@@ -94,7 +95,7 @@ const updateExercise = async (name, category, description, img, exerciseId) => {
 
       // Si el nombre ya está ocupado lanzamos un error.
       if (exercises.length > 0) {
-        generateError('Nombre de ejercicio no disponible', 403);
+        generateError("Nombre de ejercicio no disponible", 403);
       }
 
       //Comprobamos si es necesario actualizar la imagen
@@ -116,7 +117,7 @@ const updateExercise = async (name, category, description, img, exerciseId) => {
   }
 };
 
-// Función que borra un ejercicio
+//Función que borra un ejercicio
 const deleteExerciseById = async (id) => {
   let connection;
   try {
