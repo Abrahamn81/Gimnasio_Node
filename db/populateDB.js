@@ -15,34 +15,19 @@ async function main() {
     console.log("Creando tablas...");
 
     await connection.query(`
-    INSERT INTO TABLE IF NOT EXISTS users (
-            id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
-            email VARCHAR(100) UNIQUE NOT NULL,
-            password VARCHAR(100) NOT NULL,
-            name VARCHAR(50),
-            admin BOOLEAN DEFAULT false,
-            createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
-            modifiedAt TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-        );
-    
+    INSERT INTO users (id, email, password, name, admin)
+    VALUES (1, 'manolete@gmail.com', 123456789, 'Manolete', true),
+    (2, 'patricia@gmail.com', 123456, 'Patricia', false);
+
     `);
 
     await connection.query(`
-        INSERT INTO  TABLE IF NOT EXISTS exercises (
-            id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
-            name VARCHAR(100) NOT NULL,
-            category VARCHAR(100) NOT NULL,
-            idUser INT UNSIGNED NOT NULL,
-            img VARCHAR(100),
-            description VARCHAR(500) NOT NULL,
-            createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
-            modifiedAt TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-            FOREIGN KEY(idUser) REFERENCES users(id)
-        );
+        INSERT INTO exercises (name, category, idUser, img, description)
+        VALUES ('Abductores en polea', 'Pierna', 1, '/uploads/abductorespoela.jpg', 'Ejercicio de empuje en el que trabajamos los abductores, con un rango amplio para involucrar todas las fibras con una tensión constante gracias a una polea.') ;
     
     `);
 
-    await connection.query(`
+    /*     await connection.query(`
         INSERT INTO  TABLE IF NOT EXISTS likes (
             id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
             idUser INT UNSIGNED NOT NULL,
@@ -52,7 +37,7 @@ async function main() {
             FOREIGN KEY(idExercise) REFERENCES exercises(id) ON DELETE CASCADE
         );
     
-    `);
+    `); */
     console.log("Tablas creadas!");
   } catch (error) {
     console.error(error);
