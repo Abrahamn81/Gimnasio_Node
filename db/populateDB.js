@@ -1,5 +1,5 @@
 require("dotenv").config();
-
+const bcrypt = require("bcrypt");
 const { getConnection } = require("./db");
 
 async function main() {
@@ -14,16 +14,21 @@ async function main() {
 
     console.log("Creando tablas...");
 
-    await connection.query(`
-    INSERT INTO users (id, email, password, name, admin)
-    VALUES (1, 'manolete@gmail.com', 123456789, 'Manolete', true),
-    (2, 'patricia@gmail.com', 123456, 'Patricia', false);
+    const passwordHash = await bcrypt.hash("123456789", 8);
 
-    `);
+    await connection.query(
+      `
+    INSERT INTO users (email, password, name, admin)
+    VALUES ('manolete@gmail.com', ?, 'Manolete', true),
+    ('patricia@gmail.com', ?, 'Patricia', false);
+
+    `,
+      [passwordHash, passwordHash]
+    );
 
     await connection.query(`
         INSERT INTO exercises (name, category, idUser, img, description)
-        VALUES ('Abductores en polea', 'Pierna', 1, '/uploads/abductorespoela.jpg', 'Ejercicio de empuje en el que trabajamos los abductores, con un rango amplio para involucrar todas las fibras con una tensión constante gracias a una polea.') ;
+        VALUES ('Abductores en polea', 'Pierna', 1, 'abductorespoela.jpg', 'Ejercicio de empuje en el que trabajamos los abductores, con un rango amplio para involucrar todas las fibras con una tensión constante gracias a una polea.') ;
     
     `);
 
