@@ -6,11 +6,13 @@ Aplicación para organizar internamente los entrenamientos en un gimnasio.
 
 - Crear una base de datos vacía en una instancia de MySQL local llamada "trabajoNode".
 
+- Instalar node_modules ejecutando el comando "npm install"
+
 - Guardar el archivo .env.example como .env y cubrir los datos necesarios.
 
-- Ejecutar node db/initDB.js para crear las tablas necesarias en la base de datos anteriormente creada.
+- Ejecutar "npm run resetDB" para crear las tablas necesarias en la base de datos anteriormente creada.
 
-- Ejecutar npm run dev o npm start para lanzar el servidor.
+- Ejecutar "npm run dev" o "npm start" para lanzar el servidor.
 
 ## Entidades
 
@@ -35,16 +37,7 @@ Aplicación para organizar internamente los entrenamientos en un gimnasio.
   - createdAt
   - modifiedAt
 
-  - likes:
-
-  - id
-  - idUser
-  - idExcercise
-  - createdAt
-
-Extra
-
-- Favourites:
+- likes:
 
   - id
   - idUser
@@ -60,7 +53,7 @@ Extra
 - GET [/user/:id] - Devuelve información del usuario del token. TOKEN ✅
   Opcional
 - PUT [/user/:id] - Editar nombre de usuario o el email. TOKEN ✅
-- DELETE [/user/:id] - Eliminar un usuario. TOKEN
+- DELETE [/user/:id] - Eliminar un usuario. TOKEN ✅
 
 ### Ejercicios User:
 
@@ -78,5 +71,5 @@ Opcional
 ### Ejercicios User admin:
 
 - POST [/exercises] - Permite crear un ejercicio. TOKEN ✅
-- PUT [/exercises/:id] - Permite modificar un ejercicio. TOKEN
+- PUT [/exercises/:id] - Permite modificar un ejercicio. TOKEN ✅
 - DELETE [/exercises/:id] - Borra un ejercicio solo si eres admin. TOKEN ✅
