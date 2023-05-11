@@ -65,7 +65,7 @@ Aplicación para organizar internamente los entrenamientos en un gimnasio.
 
 Opcional
 
-- GET [/exercises/:idExercises/favourites] - Devuelve información de los ejercicios favoritos.
+- GET [/exercises/:idExercises/favourites] - Devuelve información de los ejercicios favoritos (los que tienen like).
 - POST [/exercises/:idExercises/favourites] - Añade un ejercicio a la lista de favoritos. TOKEN
 
 ### Ejercicios User admin:
